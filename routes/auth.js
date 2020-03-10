@@ -1,11 +1,12 @@
 const router  = require('express').Router();
-
 // import use model
 const User = require('../model/User');
 //validation the input
 const joi = require('@hapi/joi');
 // import bcrypt
 const bcrypt = require('bcryptjs');
+// impoet jwt
+const jwt = require('jsonwebtoken');
 
 router.post('/register', async (req, res) =>{
 
@@ -43,9 +44,10 @@ router.post('/login' , async (req, res) =>{
         const isPassCorrect = await bcrypt.compare(req.body.password , user.password);
         if(!isPassCorrect) return  res.status(400).json({message: "email or password is wrond"});
 
-        res.send(200).json({
-            message: "Success"
-        })
+        // to create token
+        const token = jwt.sign({_id: user._id }, 'this is our token');
+        res.header('auth-token', token).send(token);
+        // res.send(200).send("Success")
 });
 
 

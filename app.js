@@ -18,7 +18,7 @@ app.use('/api/user', authRouter);
 mongoose.connect('mongodb://localhost:27017/Auth', {useNewUrlParser: true}).then(
     (result) =>{
         console.log('Connected')
-        app.listen(3001)
+        app.listen(3002)
     }
 ).catch(err => console.log(err));
 
